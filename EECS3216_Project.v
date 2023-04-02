@@ -17,7 +17,7 @@ integer random = 0; // index of LED
 
 
 parameter time1s=32'd50000000;
-reg[35:0] time2s=32'd100000000;
+
 integer index1=8;
 
 // Internal signals

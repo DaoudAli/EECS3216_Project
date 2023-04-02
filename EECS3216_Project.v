@@ -49,6 +49,39 @@ always @(posedge cin) begin
 		mole_timer = 32'd100000000;
 	end
 	
+	if (mole_timer <= 32'd20000000) begin // saturates at 400ms, doesn't go any less than 400ms
+	// Score
+		if (LEDR[random_number%9] == 1 & SW[random_number%9] == 1 && s_reg[random_number%9] == 0) begin // LED is on and push button is clicked) USING SWITCHES FOR TEST CHANGE TO '0' LATER
+			time_deb <= time_deb + 1;
+			if (time_deb > 100000) begin
+				score = score + 1; // increment score by 1
+				LEDR[random_number%9] = 0;
+				s_reg[random_number%9] = 1;
+				time_deb <= 32'd0;
+			end
+		end
+		else if (SW[random_number%9] == 0) begin
+			s_reg[random_number%9] = 0;
+		end
+	end
+	else begin // mole pops up and disappears faster
+	// Score
+		if (LEDR[random_number%9] == 1 & SW[random_number%9] == 1 && s_reg[random_number%9] == 0) begin // LED is on and push button is clicked) USING SWITCHES FOR TEST CHANGE TO '0' LATER
+			time_deb <= time_deb + 1;
+			if (time_deb > 100000) begin
+				score = score + 1; // increment score by 1
+				LEDR[random_number%9] = 0;
+				mole_timer = mole_timer - 32'd2500000; // shaves off 50ms each time the player scores
+				s_reg[random_number%9] = 1;
+				time_deb <= 32'd0;
+			end
+		end
+		else if (SW[random_number%9] == 0) begin
+			s_reg[random_number%9] = 0;
+		end
+	end
+	
+	/*
 	// Score
 	if (LEDR[random_number%9] == 1 & SW[random_number%9] == 1 && s_reg[random_number%9] == 0) begin // LED is on and push button is clicked) USING SWITCHES FOR TEST CHANGE TO '0' LATER
 		time_deb <= time_deb + 1;
@@ -63,6 +96,7 @@ always @(posedge cin) begin
 	else if (SW[random_number%9] == 0) begin
 		s_reg[random_number%9] = 0;
 	end
+	*/
 	
 	// Display HEX Segment for Player Score
 	displayTens = score/10;

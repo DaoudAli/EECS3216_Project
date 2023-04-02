@@ -21,7 +21,6 @@ integer displayTens = 0;
 integer displayOnes = 0;
 
 // LEDS
-
 reg [3:0] shift_reg;
 reg [3:0] random_number;
 initial shift_reg = 1;
@@ -47,6 +46,7 @@ always @(posedge cin) begin
 		LEDR[6] = 0;
 		LEDR[7] = 0;
 		LEDR[8] = 0;
+		mole_timer = 32'd100000000;
 	end
 	
 	// Score
@@ -55,7 +55,7 @@ always @(posedge cin) begin
 		if (time_deb > 100000) begin
 			score = score + 1; // increment score by 1
 			LEDR[random_number%9] = 0;
-			//mole_timer = mole_timer/1.05; // shaves off 100ms each time the player scores
+			mole_timer = mole_timer - 32'd2500000; // shaves off 50ms each time the player scores
 			s_reg[random_number%9] = 1;
 			time_deb <= 32'd0;
 		end

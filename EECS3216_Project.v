@@ -20,16 +20,8 @@ integer score = 0;
 integer displayTens = 0;
 integer displayOnes = 0;
 
-<<<<<<< Updated upstream
-
-parameter time1s=32'd50000000;
-
-integer index1=8;
-
-// Internal signals
-=======
 // LEDS
->>>>>>> Stashed changes
+
 reg [3:0] shift_reg;
 reg [3:0] random_number;
 initial shift_reg = 1;
